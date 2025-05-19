@@ -6,7 +6,13 @@ const dataflowRoutes = require("./routes/dataflows");
 
 const app = express();
 
-app.use(cors());            // ✅ Enables Cross-Origin Resource Sharing
+// app.use(cors({
+//   origin: ["http://localhost:8080", "https://domass-etl-backend.onrender.com"],
+//   credentials: true
+// }));
+
+app.use(cors({ origin: '*' }));
+
 app.use(express.json());    // ✅ Parses incoming JSON requests
 
 // ✅ Mount dataflows routes under /api/dataflows
