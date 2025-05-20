@@ -1,24 +1,20 @@
-require('dotenv').config({ path: './.env' }); // ✅ Loads environment variables
+require("dotenv").config({ path: "./.env" });
 
 const express = require("express");
 const cors = require("cors");
 const dataflowRoutes = require("./routes/dataflows");
+const snowflakeRoutes = require("./routes/snowflake");
 
 const app = express();
 
-// app.use(cors({
-//   origin: ["http://localhost:8080", "https://domass-etl-backend.onrender.com"],
-//   credentials: true
-// }));
+app.use(cors({ origin: "*" }));
 
-app.use(cors({ origin: '*' }));
+app.use(express.json());
 
-app.use(express.json());    // ✅ Parses incoming JSON requests
-
-// ✅ Mount dataflows routes under /api/dataflows
 app.use("/api/dataflows", dataflowRoutes);
 
-// ✅ Use environment variable for port, fallback to 8080
+app.use("/api/snowflake", snowflakeRoutes);
+
 const PORT = process.env.PORT || 8080;
 
 app.listen(PORT, () => {
