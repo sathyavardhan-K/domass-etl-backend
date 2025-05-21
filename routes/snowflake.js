@@ -23,7 +23,7 @@ router.post("/generate-sql", upload.single("file"), async (req, res) => {
     });
 
     const response = await axios.post(
-      "https://python-app-snowflake-462434048008.asia-south1.run.app/generate-sql",
+      "https://jsonsnowflakev2-457073865923.asia-south2.run.app/generate-sql",
       form,
       {
         headers: form.getHeaders(),
