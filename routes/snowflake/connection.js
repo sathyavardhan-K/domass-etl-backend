@@ -3,6 +3,7 @@ dotenv.config();
 import snowflake from "snowflake-sdk";
 
 export const snowflakeConnection = async (snowflakeConfig) => {
+  
   const connection = snowflake.createConnection({
     account: snowflakeConfig?.account,
     username: snowflakeConfig?.username,

@@ -1,5 +1,7 @@
-const express = require("express");
-const axios = require("axios");
+// ./routes/dataflows.js
+import express from "express";
+import axios from "axios";
+
 const router = express.Router();
 
 router.get("/:id", async (req, res) => {
@@ -31,4 +33,4 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

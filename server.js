@@ -1,14 +1,17 @@
-require("dotenv").config({ path: "./.env" });
+// server.js
+import dotenv from "dotenv";
+import express from "express";
+import cors from "cors";
 
-const express = require("express");
-const cors = require("cors");
-const dataflowRoutes = require("./routes/dataflows");
-const snowflakeRoutes = require("./routes/snowflake/index");
-const domoAiRoutes = require("./routes/domoai/index");
+import dataflowRoutes from "./routes/dataflows.js";
+import snowflakeRoutes from "./routes/snowflake/index.js";
+import domoAiRoutes from "./routes/domoai/index.js";
+
+dotenv.config({ path: "./.env" });
+
 const app = express();
 
 app.use(cors({ origin: "*" }));
-
 app.use(express.json());
 
 app.use("/api/dataflows", dataflowRoutes);

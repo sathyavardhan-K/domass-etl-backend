@@ -1,6 +1,7 @@
-const express = require("express");
+import express from "express";
+import { snowflakeConnection } from "./connection.js";
+
 const router = express.Router();
-const { snowflakeConnection } = require("./connection");
 
 // POST /execute route to process SQL scripts
 router.post("/execute", async (req, res) => {
@@ -48,4 +49,4 @@ router.post("/execute", async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;
