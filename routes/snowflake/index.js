@@ -49,4 +49,61 @@ router.post("/execute", async (req, res) => {
   }
 });
 
+router.post("/fetch-tables", async (req, res) => {
+  let snowflakeConfig = req.body.snowflakeConfig;
+
+  // If snowflakeConfig is a JSON string, parse it
+  if (typeof snowflakeConfig === "string") {
+    try {
+      snowflakeConfig = JSON.parse(snowflakeConfig);
+    } catch (err) {
+      return res.status(400).json({ error: "Invalid JSON string for snowflakeConfig." });
+    }
+  }
+
+  if (
+    !snowflakeConfig ||
+    typeof snowflakeConfig !== "object" ||
+    !snowflakeConfig.database ||
+    !snowflakeConfig.schema
+  ) {
+    return res.status(400).json({
+      error: "Missing required fields in snowflakeConfig: database or schema.",
+    });
+  }
+
+  try {
+    const conn = await snowflakeConnection(snowflakeConfig);
+
+    const { database, schema } = snowflakeConfig;
+
+    const sqlText = `
+      SELECT TABLE_NAME
+      FROM ${database}.INFORMATION_SCHEMA.TABLES
+      WHERE TABLE_SCHEMA = '${schema}'
+      ORDER BY TABLE_NAME;
+    `;
+
+    conn.execute({
+      sqlText,
+      complete: (err, _stmt, rows) => {
+        if (err) {
+          console.error("❌ Failed to fetch table names:", err);
+          return res.status(500).json({ error: err.message });
+        }
+
+        const tableNames = rows.map(row => row.TABLE_NAME);
+        // console.log("tableNames", tableNames);
+        
+        return res.json({ tables: tableNames });
+      },
+    });
+  } catch (error) {
+    console.error("❗ Connection error:", error);
+    return res.status(500).json({
+      error: error.message || "Unexpected error while fetching tables.",
+    });
+  }
+});
+
 export default router;
