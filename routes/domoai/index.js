@@ -64,7 +64,7 @@ router.post("/generate-query", async (req, res) => {
   - Default to using the STAGING schema in ANALYTICS_DB unless otherwise specified.
  
   - Add clear section headings with comments in the SQL, such as:
-    -- CREATE OR REPLACE DATABASE, SCHEMA, WAREHOUSE (MUST)  -DONT MENTION (IF NOT EXISTS)-
+    -- if not exists CREATE OR REPLACE DATABASE, SCHEMA, WAREHOUSE (MUST) else use the existing table  -DONT MENTION (IF NOT EXISTS)-
     -- USE QUERY EACH DATABASE AND SCHEMA AND WAREHOUSE (MUST)
     -- CREATE TABLE (INPUT SOURCE AND OUTPUT TARGET) (MUST)
     -- STORED PROCEDURE (TRANSFORMATION LOGIC) (MUST)
