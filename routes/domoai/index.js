@@ -94,6 +94,7 @@ Important:
 - Must Need to have create replace statment for each object to avoid error - avoid if exist
 - Snowflake does not support EXCEPTION blocks or WHEN ERROR THEN in SQL stored procedures.
 - Don't mix or reverse the order — Snowflake is strict about clause placement.
+- Don't use hyphen (-) in column names, use underscore (_) instead.
 - Remove all unwanted text. Return only the JSON response as shown above, no extra explanation.`;
 
   if (!inputJson) {
